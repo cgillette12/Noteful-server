@@ -1,6 +1,6 @@
 
-INSERT INTO folders
-  (title)
+INSERT INTO folder
+  (name)
   VALUES
     ('Elan'),
     ('Green'),

@@ -1,27 +1,27 @@
 'use strict';
 const FoldersService = {
   getAllFolders(knex) {
-    return knex.select('*').from('Folders');
+    return knex.select('*').from('folder');
   },
   insertArticle(knex, newArticle) {
     return knex
       .insert(newArticle)
-      .into('Folders')
+      .into('folder')
       .returning('*')
       .then(rows => {
         return rows[0];
       });
   },
   getById(knex, id) {
-    return knex.from('Folders').select('*').where('id', id).first();
+    return knex.from('folder').select('*').where('id', id).first();
   },
   deleteArticle(knex, id) {
-    return knex('Folders')
+    return knex('folder')
       .where({ id })
       .delete();
   },
   updateArticle(knex, id, newArticleFields) {
-    return knex('Folders')
+    return knex('folder')
       .where({ id })
       .update(newArticleFields);
   },

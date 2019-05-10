@@ -3,9 +3,9 @@ const notesService = {
   getAllNotes(knex) {
     return knex.select('*').from('notes');
   },
-  insertArticle(knex, newArticle) {
+  insertNotes(knex, newNotes) {
     return knex
-      .insert(newArticle)
+      .insert(newNotes)
       .into('notes')
       .returning('*')
       .then(rows => {
@@ -15,15 +15,15 @@ const notesService = {
   getById(knex, id) {
     return knex.from('notes').select('*').where('id', id).first();
   },
-  deleteArticle(knex, id) {
+  deleteNotes(knex, id) {
     return knex('notes')
       .where({ id })
       .delete();
   },
-  updateArticle(knex, id, newArticleFields) {
+  updateNotes(knex, id, newNotesFields) {
     return knex('notes')
       .where({ id })
-      .update(newArticleFields);
+      .update(newNotesFields);
   },
 };
 

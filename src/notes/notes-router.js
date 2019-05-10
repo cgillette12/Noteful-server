@@ -8,12 +8,11 @@ const NotesRouter = express.Router();
 const jsonParser = express.json();
 
 const serializeNotes = notes => ({
-  id: notes.id,
-  style: notes.style,
-  title: xss(notes.title),
-  content: xss(notes.content),
-  date_published: notes.date_published,
-  author: notes.author
+  id :notes.id,
+  title: notes.title,
+  folder_id :notes.folder_id,
+  content :notes.content
+  
 });
 
 NotesRouter
@@ -27,16 +26,15 @@ NotesRouter
       .catch(next);
   })
   .post(jsonParser, (req, res, next) => {
-    const { title, content, style, author } = req.body;
-    const newnotes = { title, content, style };
+    const { title, content } = req.body;
+    const newnotes = { title, content };
 
     for (const [key, value] of Object.entries(newnotes))
       if (value == null)
         return res.status(400).json({
           error: { message: `Missing '${key}' in request body` }
         });
-    newnotes.author = author;
-    NotesService.insertnotes(
+    NotesService.insertNotes(
       req.app.get('db'),
       newnotes
     )
@@ -71,7 +69,7 @@ NotesRouter
     res.json(serializeNotes(res.notes));
   })
   .delete((req, res, next) => {
-    NotesService.deletenotes(
+    NotesService.deleteNotes(
       req.app.get('db'),
       req.params.notes_id
     )
@@ -81,18 +79,18 @@ NotesRouter
       .catch(next);
   })
   .patch(jsonParser, (req, res, next) => {
-    const { title, content, style } = req.body;
-    const notesToUpdate = { title, content, style };
+    const { title, content } = req.body;
+    const notesToUpdate = { title, content };
 
     const numberOfValues = Object.values(notesToUpdate).filter(Boolean).length;
     if (numberOfValues === 0)
       return res.status(400).json({
         error: {
-          message: 'Request body must content either \'title\', \'style\' or \'content\''
+          message: 'Request body must content either \'title\', \' or \'content\''
         }
       });
 
-    NotesService.updatenotes(
+    NotesService.updateNotes(
       req.app.get('db'),
       req.params.notes_id,
       notesToUpdate
