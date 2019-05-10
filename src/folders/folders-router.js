@@ -23,16 +23,16 @@ FoldersRouter
       .catch(next);
   })
   .post(jsonParser, (req, res, next) => {
-    const { title, content, style, author } = req.body;
-    const newfolders = { title, content, style };
+    const { name } = req.body;
+    const newfolders = { name };
 
     for (const [key, value] of Object.entries(newfolders))
       if (value == null)
         return res.status(400).json({
           error: { message: `Missing '${key}' in request body` }
         });
-    newfolders.author = author;
-    FoldersService.insertfolders(
+  
+    FoldersService.insertFolders(
       req.app.get('db'),
       newfolders
     )
@@ -46,7 +46,7 @@ FoldersRouter
   });
 
 FoldersRouter
-  .route('/:folder_id')
+  .route('/:folders_id')
   .all((req, res, next) => {
     FoldersService.getById(
       req.app.get('db'),
@@ -67,7 +67,7 @@ FoldersRouter
     res.json(serializeFolders(res.folders));
   })
   .delete((req, res, next) => {
-    FoldersService.deletefolders(
+    FoldersService.deleteFolders(
       req.app.get('db'),
       req.params.folders_id
     )
@@ -77,8 +77,8 @@ FoldersRouter
       .catch(next);
   })
   .patch(jsonParser, (req, res, next) => {
-    const { title, content, style } = req.body;
-    const foldersToUpdate = { title, content, style };
+    const { name } = req.body;
+    const foldersToUpdate = { name };
 
     const numberOfValues = Object.values(foldersToUpdate).filter(Boolean).length;
     if (numberOfValues === 0)
@@ -88,7 +88,7 @@ FoldersRouter
         }
       });
 
-    FoldersService.updatefolders(
+    FoldersService.updateFolders(
       req.app.get('db'),
       req.params.folders_id,
       foldersToUpdate

@@ -3,9 +3,9 @@ const FoldersService = {
   getAllFolders(knex) {
     return knex.select('*').from('folder');
   },
-  insertArticle(knex, newArticle) {
+  insertFolders(knex, newFolders) {
     return knex
-      .insert(newArticle)
+      .insert(newFolders)
       .into('folder')
       .returning('*')
       .then(rows => {
@@ -15,15 +15,15 @@ const FoldersService = {
   getById(knex, id) {
     return knex.from('folder').select('*').where('id', id).first();
   },
-  deleteArticle(knex, id) {
+  deleteFolders(knex, id) {
     return knex('folder')
       .where({ id })
       .delete();
   },
-  updateArticle(knex, id, newArticleFields) {
+  updateFolders(knex, id, newFoldersFields) {
     return knex('folder')
       .where({ id })
-      .update(newArticleFields);
+      .update(newFoldersFields);
   },
 };
 
