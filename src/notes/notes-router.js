@@ -2,7 +2,7 @@
 const path = require('path');
 const express = require('express');
 const xss = require('xss');
-const NotesService = require('./Notes-service');
+const NotesService = require('./notes-service');
 
 const NotesRouter = express.Router();
 const jsonParser = express.json();
