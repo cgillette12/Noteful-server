@@ -39,7 +39,7 @@ FoldersRouter
       .then(folders => {
         res
           .status(201)
-          .location(path.posix.join(req.originalUrl, `/${folders.id}`))
+          .location(path.posix.join(req.originalUrl,`/${folders.id}`))
           .json(serializeFolders(folders));
       })
       .catch(next);
