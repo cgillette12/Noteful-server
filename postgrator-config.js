@@ -1,6 +1,5 @@
-'use strict';
-
 require('dotenv').config();
+'use strict';
 
 module.exports = {
   'migrationDirectory': 'migrations',
