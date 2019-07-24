@@ -1,4 +1,4 @@
-const whitelist = ['http://localhost:3000', 'https://shielded-brook-76179.herokuapp.com'];
+const whitelist = ['http://localhost:3000',];
 const originGenerator = function (origin, callback) {
   if (whitelist.indexOf(origin) !== -1 || !origin) {
     callback(null, true);
